@@ -20,7 +20,8 @@
         "initializer_list": "cpp",
         "cstdlib": "cpp",
         "xiosbase": "cpp",
-        "xlocale": "cpp"
+        "xlocale": "cpp",
+        "iostream": "cpp"
     }
     //"C_Cpp.errorSquiggles": "Disabled"
 }
