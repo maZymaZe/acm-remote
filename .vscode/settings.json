@@ -1,6 +1,8 @@
 {
     "files.associations": {
         "*.cpp": "cpp",
+        "*.svh": "systemverilog",
+        "*.html": "html",
         "deque": "cpp",
         "string": "cpp",
         "vector": "cpp",
@@ -21,7 +23,15 @@
         "cstdlib": "cpp",
         "xiosbase": "cpp",
         "xlocale": "cpp",
-        "iostream": "cpp"
+        "iostream": "cpp",
+        "xstddef": "cpp",
+        "cstdio": "cpp",
+        "utility": "cpp",
+        "cstring": "cpp",
+        "atomic": "cpp",
+        "ios": "cpp",
+        "system_error": "cpp",
+        "cmath": "cpp"
     }
     //"C_Cpp.errorSquiggles": "Disabled"
 }
