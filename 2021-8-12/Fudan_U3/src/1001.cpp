@@ -1,0 +1,79 @@
+#include <cstdio>
+typedef long long ll;
+
+int T, x;
+ll l, r;
+
+ll dp[30][1010][2][2];
+
+ll p9[30];
+int a[30], p10[30];
+
+ll solve(ll n) {
+    for (int i = 1; i <= 19; i++)
+        a[i] = n % 10, n /= 10;
+    ll res = 1;
+    // cal tot
+    for (int i = 19; i > 0; i--) {
+        int cnt = 0;
+        for (int j = 0; j < a[i]; j++) {
+            cnt += (j != 7);
+        }
+        res += p9[i - 1] * cnt;
+        if (a[i] == 7)  // cal res b[i]==a[i],so when a[i]==7 break
+            break;
+    }
+    for (int i = 1; i <= 19; i++) {
+        if (a[i] == 7) {
+            res--;
+            break;
+        }
+    }
+
+    for (int t = 1; t < x; t++) {
+        for (int i = 0; i <= 19; i++) {
+            for (int j = 0; j < x; j++) {
+                dp[i][j][0][0] = dp[i][j][0][1] = dp[i][j][1][0] =
+                    dp[i][j][1][1] = 0;
+            }
+        }
+        dp[19][0][1][1] = 1;
+        for (int i = 19; i > 0; i--) {
+            for (int j = 0; j < x; j++) {          // rest
+                for (int k = 0; k < 2; k++) {      // k means reach a[i]
+                    for (int l = 0; l < 2; l++) {  // l means start with 0
+                        if (!dp[i][j][k][l])
+                            continue;
+                        int mx = k ? a[i] : 9;
+                        for (int d = 0; d <= mx; d++) {
+                            if (d == 7)
+                                continue;
+                            int nj = (j * 10 + d) % x;
+                            if (d || !l)
+                                if (!nj || (i > 1 && nj * p10[i - 1] % x == t))
+                                    continue;
+                            dp[i - 1][nj][k & (d == mx)][l & (!d)] +=
+                                dp[i][j][k][l];
+                        }
+                    }
+                }
+            }
+        }
+        res -= dp[0][t][0][0] + dp[0][t][1][0];
+    }
+    return res;
+}
+
+int main() {
+    scanf("%d", &T);
+    while (T--) {
+        scanf("%lld%lld%d", &l, &r, &x);
+        p10[0] = 1 % x;
+        p9[0] = 1;
+        for (int i = 1; i <= 19; i++) {
+            p10[i] = p10[i - 1] * 10 % x, p9[i] = 9LL * p9[i - 1];
+        }
+        printf("%lld\n", solve(r) - solve(l - 1));
+    }
+    return 0;
+}
